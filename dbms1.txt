@@ -1,0 +1,131 @@
+CREATE TABLE department (dept_no int (10),dept_name varchar (20) UNIQUE, building_name varchar(20) UNIQUE);
+CREATE TABLE insructor (ins_id int (10),ins_name varchar (20) NOT null, dept_no int(20) ,salary int (30),mob_no int (10));
+CREATE TABLE course (course_id int (10),title varchar (20), dept_no int(20));
+CREATE TABLE teacher (teacher_id int (10), course_id int(20),semester int (10),year int (10));
+INSERT INTO teacher(teacher_id , course_id,semester ,year) VALUES 
+ (1,101,1,2022),(2,102,2,2022),(3,103,2,2022),(4,101,2,2023),(5,102,2,2023),(6,103,2,2023),(7,104,1,2022),(8,105,2,2022),(9,106,2,2022);
+INSERT INTO insructor(ins_id , ins_name, dept_no  ,salary , mob_no) VALUES 
+( (101,"A",201,10000,9301989202),(102,"B",201,23000,9021232022),(103,"C",201,40000,2324342022),(104,"D",201,50000,3243242023),(105,"E",201,45000,2023433323),(106,"F",202,30000,9309089202),(107,"G",202,62000,9025032022),(108,"H",202,55000,2327842022),(109,"I",202,60000,6243242023),(110,"J",202,70000,2023433323));
+INSERT INTO department(dept_no ,dept_name , building_name) VALUES 
+ (201,"Computer","floor_1"),(202,"IT","floor_2"),(203,"ENTC","floor_3"),(204,"Civil","floor_4"),(205,"Mechanical","floor_5");
+INSERT INTO insructor(ins_id , ins_name, dept_no  ,salary , mob_no) VALUES 
+( (111,"K",203,50000,9300089202),(112,"L",203,25000,9051232022),(113,"M",203,40000,2384342022),(114,"N",203,55000,3843242023),(115,"O",204,45000,2523433323),(116,"P",204,30000,9709089202),(117,"Q",204,62000,9085032022),(118,"R",205,55000,2367842022),(119,"S",205,60000,6247242023),(120,"T",205,70000,2043433323));
+INSERT INTO course (course_id,title , dept_no) VALUES
+(101,"Computer Languages",201),(102,"networking",201),(101,"OS",201),(102,"networking",202),(101,"Computer Languages",202),(101,"OS",201),(103,"electronics",203),(104,"designing",204),(105,"machine designing",205);
+
+CREATE VIEW instructor_view as SELECT ins_id,ins_name, dept_no ,mob_no FROM insructor;
+SELECT *FROM instructor_view;
+
+
+
+
+
+//////////////////CHIT No 15 ////////////////
+
+
+INSERT INTO emp  (EmpID,firstName,lastName,deptID,salary) VALUES ( 1,"Tanuja","Adhav",101,200000),( 2,"Samrudhi","Bhusnikar",101,100000),( 3,"Rutuja","Kolte",102,200000),( 4,"Sanika","Pathare",102,200000),( 5,"Simran","Kapure",103,50000),( 6,"Varsha","Raje",103,60000),( 7,"Damini","Rajput",104,55000);
+CREATE table departments (deptID int (10),deptName varchar(30), deptManager varchar (30));
+INSERT INTO departments (deptID,deptName, deptManager) VALUES (101,"sales","MAD"),(102,"Delivery","Sam"),(103,"productManagement","kjdf"),(104,"categories","dda");
+
+-- Table Schema: Employees
+CREATE TABLE Employees (
+    EmployeeID INT PRIMARY KEY,
+    FirstName VARCHAR(50),
+    LastName VARCHAR(50),
+    Age INT,
+    DepartmentID INT,
+    Salary DECIMAL(10, 2)
+);
+
+-- Table Schema: Orders
+CREATE TABLE Orders (
+    OrderID INT PRIMARY KEY,
+    OrderDate DATE,
+    ShippedDate DATE,
+    CustomerID INT
+);
+INSERT INTO Orders (OrderID,OrderDate ,ShippedDate ,CustomerID )VALUES(11,12-02-2022,21-02-2022,1234),(12,2-03-2023,21-03-2023,234);
+
+
+-- Table Schema: Products
+CREATE TABLE Products (
+    ProductID INT PRIMARY KEY,
+    Category VARCHAR(50),
+    Price DECIMAL(10, 2)
+);
+INSERT INTO Products (ProductID,Category ,Price) VALUES (23,'Electronics',1200),(253,'Vegetables',500),(122,'Stationery',900);
+
+-- Table Schema: Customers
+CREATE TABLE Customers (
+    CustomerID INT PRIMARY KEY,
+    CustomerName VARCHAR(100),
+    CustomerAge INT (5)
+);
+INSERT INTO Customers (CustomerID ,CustomerName ,CustomerAge) VALUES (101,'Anu',20),(102,'Yash',12);
+INSERT INTO Customers (CustomerID ,CustomerName ,CustomerAge) VALUES (1234,'Anuja',20),(234,'Yashraj',12);
+
+
+-- Table Schema: Departments
+CREATE TABLE Departments (
+    DepartmentID INT PRIMARY KEY,
+    DepartmentName VARCHAR(100),
+    ManagerID INT
+);
+INSERT INTO Departments (DepartmentID ,DepartmentName,ManagerID) VALUES (1,'Shipping',101),(2,'Supplier',102),(3,'Manager',103);
+
+
+
+-- Queries
+
+-- 1. Insert a new employee
+INSERT INTO Employees (EmployeeID, FirstName, LastName, Age, DepartmentID, Salary)
+VALUES (101, 'John', 'Doe', 28, 1, 60000.00);
+
+-- 2. Update the salary of all employees in the Sales department by 10%
+UPDATE Employees
+SET Salary = Salary * 1.10
+WHERE DepartmentID = 2; -- Assuming Sales department has DepartmentID = 2
+
+-- 3. Delete all orders placed before a certain date
+DELETE FROM Orders
+WHERE OrderDate < '2023-01-01'; -- Replace with the specific date
+
+-- 4. Retrieve names and ages of customers who made a purchase in the last month
+SELECT CustomerName, Age
+FROM Customers
+JOIN Orders ON Customers.CustomerID = Orders.CustomerID
+WHERE OrderDate >= DATEADD(MONTH, -1, GETDATE());
+
+-- 5. Increase the price of all products in the "Electronics" category by 5%
+UPDATE Products
+SET Price = Price * 1.05
+WHERE Category = 'Electronics';
+
+-- 6. Find the total number of products in each category
+SELECT Category, COUNT(ProductID) AS TotalProducts
+FROM Products
+GROUP BY Category;
+
+-- 7. Assign a new manager to a specific department
+UPDATE Departments
+SET ManagerID = 201 -- Assuming ManagerID 201 corresponds to a specific manager
+WHERE DepartmentID = 3; -- Replace with the specific department
+
+-- 8. Transfer an employee from one department to another
+UPDATE Employees
+SET DepartmentID = 4 -- Assuming DepartmentID 4 corresponds to the new department
+WHERE EmployeeID = 102; -- Replace with the specific employee
+
+-- 9. Mark an order as shipped and update the shipped date
+UPDATE Orders
+SET ShippedDate = GETDATE()
+WHERE OrderID = 11; -- Replace with the specific order
+
+
+-- 10. Retrieve the highest salary among all employees
+SELECT MAX(Salary) FROM employees;
+
+
+
+
+
